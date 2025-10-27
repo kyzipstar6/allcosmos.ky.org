@@ -1,0 +1,6 @@
+module allparticles{
+	requires javafx.graphics;
+	
+	opens application to Methods, javafx.graphics, javafx.fxml;
+	exports Methods to application;
+}

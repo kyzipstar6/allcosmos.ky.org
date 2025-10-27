@@ -20,20 +20,39 @@
         "Generation:": "First",
         "interactions" : "Strong, weak, electromagnetic, gravity",
         "Degradation": "Stable or up quark + electron + electron antineutrino"
+    },
+    {
+        "name:": "Charm quark",
+        "mass:": "1.27 GeV^-2",
+        "Electric charge:": "+2/3 e",
+        "Color charge:": "Yes",
+        "Spin:": "1/2 h",
+        "Antiparticle:": "Charm antiquark",
+        "Generation:": "Second",
+        "interactions" : "Strong,  electromagnetic, weak, gravity"
+    },
+    {
+        "name:": "Strange quark",
+        "mass:": "95 MeV^-2",
+        "Electric charge:": "-1/3 e",
+        "Color charge:": "Yes",
+        "Spin:": "1/2 h",
+        "Antiparticle:": "Strange antiquark",
+        "Generation:": "Second",
+        "interactions" : "Strong,  electromagnetic, weak, gravity",
+        "Degradation": "Up quark"
     }
 ],
 "leptons": [
     {
-    "Muon:": "Up quark",
-    "Generation":"Second",
-    "Mass:": "1.83^-28 kg",
-    "Electric charge:": "-1 e",
-    "Color charge:": "None",
-    "Spin:": "1/2 h",
-    "Mean lifetime": "2.19^-6 s",
-    "Antiparticle:": "Antimuon",
-    "Decadence" :"Electron neutrino, electron, muon neutrino",
-    "interactions" : "Weak, electromagnetic, gravity"
+    
     }
-]
+],
+"gluon":
+    {
+    "Mass": "< 1.3 MeV/c2",
+    "Electric charge": "0 e",
+    "Spin:": "1/2 h",
+    "Color charge": "Octet"
+    }
 }

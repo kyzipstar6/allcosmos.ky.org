@@ -8,8 +8,11 @@
       "xpos": 1,
       "ypos": 1,
       "phase": "gas",
-      "atomic_mass": null,
-      "boil": null
+      "Electron configuration":"1d",
+      "atomic_mass": "1.007 u",
+      "Speed of sound":"1310 m/s ",
+      "melt": "13.99 K", 
+      "boil:":"20.27 K"
     },
     {
       "number": 2,
@@ -19,8 +22,11 @@
       "xpos": 18,
       "ypos": 1,
       "phase": "gas",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "4.002 u",
+      "Electron configuration":"1s2",
+      "Speed of sound":"972 m/s ",
+      "melt": "4.22 K", 
+      "boil":"4.22 K"
     },
     {
       "number": 3,
@@ -30,8 +36,11 @@
       "xpos": 1,
       "ypos": 2,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "6.938 u",
+      "Electron configuration":"2s1",
+      "Speed of sound":"6000 m/s ",
+      "melt": "453.65 K", 
+      "boil":"1617 K"
     },
     {
       "number": 4,
@@ -41,8 +50,11 @@
       "xpos": 2,
       "ypos": 2,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "9.012 u",
+      "Electron configuration":"[He] 2s2",
+      "Speed of sound":"12890 m/s ",
+      "melt": "1560 K", 
+      "boil":"2742 K"
     },
     {
       "number": 5,
@@ -52,8 +64,11 @@
       "xpos": 13,
       "ypos": 2,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "10.806 u",
+      "Electron configuration":"[He] 2s2 2p1",
+      "Speed of sound":"16200 m/s ",
+      "melt": "2349 K", 
+      "boil":"4200 K"
     },
     {
       "number": 6,
@@ -63,8 +78,12 @@
       "xpos": 14,
       "ypos": 2,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "12.0096 u",
+      "Electron configuration":"[He] 2s2 2p2",
+      "Block":"p-block",
+      "Speed of sound":"18350 m/s ",
+      "melt": "3915 K", 
+      "boil":"3915 K"
     },
     {
       "number": 7,
@@ -74,8 +93,12 @@
       "xpos": 15,
       "ypos": 2,
       "phase": "gas",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "14.006 u",
+      "Electron configuration":"[He] 2s2 2p3",
+      "Block":"p-block",
+      "Speed of sound":"353 m/s ",
+      "melt": "63.23 K", 
+      "boil":"77.35 K"
     },
     {
       "number": 8,
@@ -85,8 +108,13 @@
       "xpos": 16,
       "ypos": 2,
       "phase": "gas",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "15.999 u",
+      "Electron configuration":"[He] 2s2 2p4",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Speed of sound":"330 m/s ",
+      "melt": "54.36 K", 
+      "boil":"90.188 K"
     },
     {
       "number": 9,
@@ -96,8 +124,12 @@
       "xpos": 17,
       "ypos": 2,
       "phase": "gas",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "18.998 u",
+      "Electron configuration":"[He] 2s2 2p",
+      "Block":"p-block",
+      "Speed of sound":"330 m/s ",
+      "melt": "53.48 K", 
+      "boil":"85.03 K"
     },
     {
       "number": 10,
@@ -107,8 +139,14 @@
       "xpos": 18,
       "ypos": 2,
       "phase": "gas",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "20.1797",
+      "Electron configuration":"[He] 2s2 2p6",
+      "Block":"p-block",
+      "Electrons per shield":"2, 8",
+      "Van der Vaals radius":"154 pm",
+      "Speed of sound":"435 m/s ",
+      "melt": "24.56 K", 
+      "boil":"27.104 K"
     },
     {
       "number": 11,
@@ -118,8 +156,15 @@
       "xpos": 1,
       "ypos": 3,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "22.989 u",
+      "Electron configuration":"[Ne] 3s1",
+      "Block":"s-block",
+      "Electrons per shield":"2, 8, 1",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"3300 m/s ",
+      "melt": "370.94 K", 
+      "boil":"1156.09 K"
     },
     {
       "number": 12,
@@ -129,8 +174,15 @@
       "xpos": 2,
       "ypos": 3,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "24.304 u",
+       "Electron configuration":"[Ne] 3s2",
+      "Block":"s-block",
+      "Electrons per shield":"2, 8, 2",
+      "Atomic radius":"160 pm",
+      "Van der Vaals radius":"173 pm",
+      "Speed of sound":"4940 m/s ",
+      "melt": "923 K", 
+      "boil":"1363 K"
     },
     {
       "number": 13,
@@ -140,8 +192,15 @@
       "xpos": 13,
       "ypos": 3,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "26.981 u",
+       "Electron configuration":"[Ne] 3s2 3p1",
+      "Block":"p-block",
+      "Electrons per shield":"2, 8, 3",
+      "Atomic radius":"143 pm",
+      "Van der Vaals radius":"184 pm",
+      "Speed of sound":"not found ",
+      "melt": "933.47 K", 
+      "boil":"2743 K"
     },
     {
       "number": 14,
@@ -151,8 +210,15 @@
       "xpos": 14,
       "ypos": 3,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "28.084 u",
+       "Electron configuration":"[Ne] 3s2 3p2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 8, 4",
+      "Atomic radius":"111 pm",
+      "Van der Vaals radius":"210 pm",
+      "Speed of sound":"8433 m/s ",
+      "melt": "1687 K", 
+      "boil":"3538 K"
     },
     {
       "number": 15,
@@ -162,8 +228,14 @@
       "xpos": 15,
       "ypos": 3,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "30.973 u",
+       "Electron configuration":"[Ne] 3s2 3p3",
+      "Block":"p-block",
+      "Electrons per shield":"2, 8, 5",
+      "Van der Vaals radius":"180 pm",
+      "Speed of sound":"not found ",
+      "boil": "860 K (red)", 
+      "melt:":"860 K (red)"
     },
     {
       "number": 16,
@@ -173,8 +245,14 @@
       "xpos": 16,
       "ypos": 3,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "32.059 u",
+       "Electron configuration":"[Ne] 3s2 3p4",
+      "Block":"p-block",
+      "Electrons per shield":"2, 8, 6",
+      "Van der Vaals radius":"180 pm",
+      "Speed of sound":"not found ",
+      "boil": "717.8 K", 
+      "melt:":"388.36 K"
     },
     {
       "number": 17,
@@ -184,8 +262,14 @@
       "xpos": 17,
       "ypos": 3,
       "phase": "gas",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "35.446 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 8, 7",
+      "Van der Vaals radius":"175 pm",
+      "Speed of sound":"206 m/s ",
+      "boil": "239.6 K", 
+      "melt:":"171.6 K"
     },
     {
       "number": 18,
@@ -195,8 +279,15 @@
       "xpos": 18,
       "ypos": 3,
       "phase": "gas",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "39.792 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 19,
@@ -206,8 +297,15 @@
       "xpos": 1,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "39.0983 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 20,
@@ -217,8 +315,15 @@
       "xpos": 2,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "40.078 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 21,
@@ -228,8 +333,15 @@
       "xpos": 3,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "44.955 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 22,
@@ -239,8 +351,15 @@
       "xpos": 4,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "47.867 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 23,
@@ -250,8 +369,15 @@
       "xpos": 5,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "50.9415 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 24,
@@ -261,8 +387,15 @@
       "xpos": 6,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "51.9961 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 25,
@@ -272,8 +405,15 @@
       "xpos": 7,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "54.938 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 26,
@@ -283,8 +423,15 @@
       "xpos": 8,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "55.845 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 27,
@@ -294,8 +441,15 @@
       "xpos": 9,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "58.933 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 28,
@@ -305,8 +459,15 @@
       "xpos": 10,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "58.6934 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 29,
@@ -316,8 +477,15 @@
       "xpos": 11,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "63.546 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 30,
@@ -327,8 +495,15 @@
       "xpos": 12,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "65.38 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 31,
@@ -338,8 +513,15 @@
       "xpos": 13,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "69.723 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 32,
@@ -349,8 +531,15 @@
       "xpos": 14,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "72.630 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 33,
@@ -360,8 +549,15 @@
       "xpos": 15,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass":"74.921 u" ,
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 34,
@@ -371,8 +567,15 @@
       "xpos": 16,
       "ypos": 4,
       "phase": "solid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "78.971 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 35,
@@ -382,8 +585,15 @@
       "xpos": 17,
       "ypos": 4,
       "phase": "liquid",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "79.901 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 36,
@@ -393,8 +603,15 @@
       "xpos": 18,
       "ypos": 4,
       "phase": "gas",
-      "atomic_mass": null,
-      "boil": null
+      "atomic_mass": "83.798 u",
+       "Electron configuration":"1s2",
+      "Block":"p-block",
+      "Electrons per shield":"2, 6",
+      "Atomic radius":"186 pm",
+      "Van der Vaals radius":"227 pm",
+      "Speed of sound":"1310 m/s ",
+      "melt": "4.22 K", 
+      "boil:":"4.22 K"
     },
     {
       "number": 37,
@@ -405,7 +622,7 @@
       "ypos": 5,
       "phase": "liquid",
       "atomic_mass": "85.47 u",
-      "melt": "312.45 K (39.3°C)",
+      "melt": "312.45 K ",
       "boil": "961 K"
 
     },
@@ -418,8 +635,8 @@
       "ypos": 5,
       "phase": "solid",
       "atomic_mass": "87.62 u",
-      "melt": "1050 K ​(777 °C)",
-      "boil": "1650 K ​(1377 °C)"
+      "melt": "1050 K ",
+      "boil": "1650 K "
       
     },
     {
@@ -427,12 +644,12 @@
       "symbol": "Yt",
       "name": "Yttrium",
       "category": "metal",
-      "xpos": 13,
+      "xpos": 3,
       "ypos": 5,
       "phase": "solid",
       "atomic_mass": "88.91 u",
-      "melt": "1799 K ​(1526 °C)",
-      "boil": "3203 K ​(2930 °C)"
+      "melt": "1799 K ",
+      "boil": "3203 K "
       
     },
     {
@@ -440,13 +657,134 @@
       "symbol": "Zc",
       "name": "Zirconium",
       "category": "rare earth",
-      "xpos": 14,
+      "xpos": 4,
       "ypos": 5,
       "phase": "solid",
       "atomic_mass": "91.22 u",
-      "melt": "2125 K ​(1852 °C)",
-      "boil": "4650 K ​(4377 °C)"
+      "melt": "2125 K",
+      "boil": "4650 K"
       
+    },
+    {
+      "number": 42,
+      "symbol": "Mb",
+      "name": "Molybdenum",
+      "category": "ductile transition metal",
+      "xpos": 5,
+      "ypos": 4,
+      "phase": "solid",
+      "atomic_mass": "95.95 u",
+      "melt": "2896 K ",
+      "boil": "4912 K ",
+      "block": "d-block",
+      "notes": "Molybdenum does not occur naturally as a free metal on Earth; in its minerals, it is found only in oxidized states."
+    },
+{
+      "number": 43,
+      "symbol": "Te",
+      "name": "Technetium",
+      "category": "ductile transition metal",
+      "xpos": 6,
+      "ypos": 4,
+      "phase": "solid",
+      "atomic_mass": "97 u",
+      "melt": "2430 K ",
+      "boil": "4538 K ",
+      "block": "d-block",
+      "Electron configuration":"[Kr] 4d5 5s2",
+      "Electrons per shield":"2, 8, 18, 13, 2",
+      "Atomic radius":"150 pm",
+      "notes": "The 43 stable isotope is radiactive."
+    },
+    {
+      "number": 44,
+      "symbol": "Ru",
+      "name": "Ruthenium",
+      "category": "ductile transition metal",
+      "xpos": 7,
+      "ypos": 4,
+      "phase": "solid",
+      "atomic_mass": "101.07 u",
+      "melt": "2607 K ",
+      "boil": "4423 K ",
+      "block": "d-block",
+      "Electron configuration":"[Kr] 4d7 5s1",
+      "Electrons per shield":"2, 8, 18, 15, 1",
+      "Atomic radius":"134 pm",
+      "notes": "Rare transition metal belonging to the platinum group of the periodic table."
+    },
+    {
+      "number": 45,
+      "symbol": "Rh",
+      "name": "Rhodium",
+      "category": "ductile transition metal",
+      "xpos": 8,
+      "ypos": 4,
+      "phase": "solid",
+      "atomic_mass": "102.905 u",
+      "melt": "2237 K ",
+      "boil": "3968 K ",
+      "block": "d-block",
+      "Electron configuration":"[Kr] 4d8 5s1",
+      "Electrons per shield":"2, 8, 18, 16, 1",
+      "Atomic radius":"134 pm",
+      "notes": "It is a very rare, silvery-white, hard, corrosion-resistant transition metal. Noble metal."
+    },
+    {
+      "number": 46,
+      "symbol": "Pd",
+      "name": "Palladium",
+      "category": "ductile transition metal",
+      "xpos": 9,
+      "ypos": 4,
+      "phase": "solid",
+      "atomic_mass": "106.42 u",
+      "melt": "1828 K ",
+      "boil": "3236 K ",
+      "block": "d-block",
+      "density (T= 293 K)": "12.007 g/cm3",
+      "Electron configuration":"[Kr] 4d",
+      "Electrons per shield":"2, 8, 18, 16",
+      "Atomic radius":"137 pm",
+      "notes": "It is a rare and lustrous silvery-white metal."
+    },
+    {
+      "number": 47,
+      "symbol": "Ag",
+      "name": "Silver",
+      "category": "ductile transition metal",
+      "xpos": 10,
+      "ypos": 4,
+      "phase": "solid",
+      "atomic_mass": "107.87 u",
+      "melt": "1234.93 K ",
+      "boil": "2435 K ",
+      "block": "d-block",
+      "density (T= 293 K)": "10.503 g/cm3",
+      "Electron configuration":"[Kr] 4d10 5s1",
+      "Electrons per shield":"2, 8, 18, 18, 1",
+      "Atomic radius":"144 pm",
+      "Speed of sound":"2680 m/s",
+      "notes": "Silver is found in the Earth's crust in the pure, free elemental form (\"native silver\"), as an alloy with gold and other metals."
+    },
+    {
+      "number": 48,
+      "symbol": "Cad",
+      "name": "Cadmium",
+      "category": "ductile transition metal",
+      "xpos": 11,
+      "ypos": 4,
+      "phase": "solid",
+      "atomic_mass": "112.414 u",
+      "melt": "594.22 K ",
+      "boil": "1040 K ",
+      "block": "d-block",
+      "density (T= 293 K)": "8.649 g/cm3",
+      "Electron configuration":"[Kr] 4d10 5s2",
+      "Electrons per shield":"2, 8, 18, 18, 2",
+      "Atomic radius":"151 pm",
+      "Speed of sound":"2310 m/s ",
+      "notes": "Cadmium occurs as a minor component in most zinc ores and is a byproduct of zinc production."
     }
   ]
 }

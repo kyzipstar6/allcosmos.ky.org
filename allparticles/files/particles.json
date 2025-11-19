@@ -45,7 +45,28 @@
 ],
 "leptons": [
     {
-    
+    "name:": "Electron neutrino",
+        "mass:": "0.06 MeV/c2",
+        "Electric charge:": "0 e",
+        "Color charge:": "No",
+        "Spin:": "1/2 h",
+        "Weak isospin:": "1/2",
+        "Weak hypercharge:": "-1",
+        "Antiparticle:": "Electron antineutrino",
+        "Generation:": "First",
+        "interactions" : "Weak, gravity"
+    },
+    {
+    "name:": "Muon neutrino",
+    "mass:": "0.06 MeV/c2",
+    "Electric charge:": "0 e",
+    "Color charge:": "No",
+    "Spin:": "1/2 h",
+    "Weak isospin:": "1/2",
+    "Weak hypercharge:": "-1",
+    "Antiparticle:": "Muon antineutrino",
+    "Generation:": "Second",
+    "interactions" : "Weak, gravity"
     }
 ],
 "gluon":

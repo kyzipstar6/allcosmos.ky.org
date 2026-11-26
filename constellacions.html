@@ -1,1 +1,738 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constel·lacions · Passat i Futur · 41°N 0°E</title>
+    <style>
+        * { box-sizing: border-box; font-family: system-ui, 'Segoe UI', Roboto, sans-serif; }
+        body {
+            background: #0a0f1e; min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; margin: 0; padding: 20px; color: #e0e8ff;
+        }
+        h1 { font-weight: 300; font-size: 2rem; letter-spacing: 1px; margin-bottom: 0.25rem; text-align: center; }
+        .subtitle {
+            color: #8a9bc0; margin-bottom: 1rem; text-align: center; font-size: 0.95rem;
+            border-bottom: 1px solid #2a3450; padding-bottom: 12px; max-width: 760px;
+        }
+        .sky-pane-wrapper {
+            position: relative; background: #050a14; border-radius: 24px; padding: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 1px #1e2a44 inset; margin-bottom: 16px;
+        }
+        .sky-viewport {
+            position: relative; width: 800px; height: 500px; overflow: hidden; border-radius: 18px;
+            background: radial-gradient(circle at 30% 20%, #111b2e, #020408);
+            box-shadow: 0 0 30px rgba(70, 130, 200, 0.15);
+        }
+        #skyPane {
+            position: absolute; top: 0; left: 0; height: 100%;
+            transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.3, 1);
+        }
+        #skyCanvas { display: block; height: 500px; }
+        .hotzone {
+            position: absolute; top: 0; height: 100%; width: 70px;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 20; cursor: pointer; opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .hotzone:hover { opacity: 1; }
+        .hotzone.left { left: 0; background: linear-gradient(to right, rgba(10,15,30,0.9), transparent); }
+        .hotzone.right { right: 0; background: linear-gradient(to left, rgba(10,15,30,0.9), transparent); }
+        .hotzone .arrow {
+            font-size: 2.4rem; color: #aaccff; user-select: none;
+            text-shadow: 0 0 12px #4f8bd0; pointer-events: none;
+        }
+        .hotzone.left .arrow { animation: pulseLeft 1.2s infinite ease-in-out; }
+        .hotzone.right .arrow { animation: pulseRight 1.2s infinite ease-in-out; }
+        @keyframes pulseLeft { 0%,100%{transform:translateX(0);opacity:0.7} 50%{transform:translateX(-6px);opacity:1} }
+        @keyframes pulseRight { 0%,100%{transform:translateX(0);opacity:0.7} 50%{transform:translateX(6px);opacity:1} }
+        .ra-ruler {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 26px;
+            pointer-events: none; z-index: 15;
+        }
+        .controls-group {
+            display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center;
+            background: #0f1729; padding: 8px 14px; border-radius: 60px; border: 1px solid #1e2a44;
+            margin-bottom: 8px;
+        }
+        .controls-group label { font-size: 0.8rem; color: #8a9bc0; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        button, select {
+            background: #131e33; border: 1px solid #2e3f60; color: #d0e0ff; padding: 8px 16px;
+            border-radius: 40px; font-size: 0.85rem; font-weight: 500; cursor: pointer;
+            transition: all 0.15s ease; letter-spacing: 0.3px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        button:hover, select:hover { background: #1d2b47; border-color: #4f6b9b; transform: translateY(-1px); }
+        select { padding: 8px 12px; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23aaccff'><path d='M6 8L2 4h8z'/></svg>"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+        .status { margin-top: 10px; font-size: 0.95rem; color: #a0b8e0; height: 22px; text-align: center; font-style: italic; }
+        .legend { display: flex; gap: 24px; margin-top: 10px; font-size: 0.8rem; color: #8a9bc0; justify-content: center; }
+        .legend span::before { content: "●"; margin-right: 5px; font-size: 0.95rem; vertical-align: middle; }
+        .legend .present::before { color: #aaccff; }
+        .legend .past::before { color: #ffaa66; }
+        .legend .future::before { color: #66ffcc; }
+    </style>
+</head>
+<body>
+    <h1>Constel·lacions · Passat i Futur</h1>
+    <div class="subtitle">Perspectiva 41°N 0°E · RA realista 0h–24h · Passa el ratolí per les vores per desplaçar el cel</div>
 
+    <div class="sky-pane-wrapper">
+        <div class="sky-viewport" id="viewport">
+            <div id="skyPane">
+                <canvas id="skyCanvas" width="2400" height="500"></canvas>
+            </div>
+            <div class="hotzone left" id="hotLeft"><span class="arrow">◀</span></div>
+            <div class="hotzone right" id="hotRight"><span class="arrow">▶</span></div>
+            <canvas class="ra-ruler" id="raRuler" width="800" height="26"></canvas>
+        </div>
+    </div>
+
+    <div class="controls-group">
+        <label>Època:</label>
+        <select id="eraSelect">
+            <optgroup label="Passat geològic">
+                <option value="hadean">Hadeà (fa ~4500 Ma)</option>
+                <option value="archean">Arqueà (fa ~3500 Ma)</option>
+                <option value="proterozoic">Proterozoic (fa ~2000 Ma)</option>
+                <option value="cambrian">Cambrià (fa ~541 Ma)</option>
+                <option value="ordovician">Ordovicià (fa ~485 Ma)</option>
+                <option value="silurian">Silurià (fa ~443 Ma)</option>
+                <option value="devonian">Devonià (fa ~419 Ma)</option>
+                <option value="carboniferous">Carbonífer (fa ~359 Ma)</option>
+                <option value="permian">Permià (fa ~299 Ma)</option>
+                <option value="triassic">Triàsic (fa ~252 Ma)</option>
+                <option value="jurassic">Juràssic (fa ~201 Ma)</option>
+                <option value="cretaceous">Cretaci (fa ~145 Ma)</option>
+                <option value="paleogene">Paleogen (fa ~66 Ma)</option>
+                <option value="neogene">Neogen (fa ~23 Ma)</option>
+                <option value="quaternary">Quaternari (fa ~2.6 Ma)</option>
+            </optgroup>
+            <optgroup label="Present">
+                <option value="present" selected>Present</option>
+            </optgroup>
+            <optgroup label="Futur">
+                <option value="future200">+200 Ma</option>
+                <option value="future400">+400 Ma</option>
+                <option value="future600">+600 Ma</option>
+                <option value="future800">+800 Ma</option>
+                <option value="future1000">+1000 Ma</option>
+            </optgroup>
+        </select>
+        <button id="resetBtn">⟲ Reiniciar vista</button>
+    </div>
+
+    <div class="status" id="statusMsg">Selecciona una època per veure l'animació</div>
+
+    <div class="legend">
+        <span class="present">Present</span>
+        <span class="past">Passat</span>
+        <span class="future">Futur</span>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- CONSTANTS ----------
+            const VIEW_W = 800, VIEW_H = 500;
+            const PANE_W = 2400;
+            const RA_SPAN_HOURS = 24;
+            const PX_PER_HOUR = PANE_W / RA_SPAN_HOURS;
+
+            const canvas = document.getElementById('skyCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = PANE_W;
+            canvas.height = VIEW_H;
+
+            const skyPane = document.getElementById('skyPane');
+            const hotLeft = document.getElementById('hotLeft');
+            const hotRight = document.getElementById('hotRight');
+            const raRuler = document.getElementById('raRuler');
+            const raCtx = raRuler.getContext('2d');
+            const statusMsg = document.getElementById('statusMsg');
+            const eraSelect = document.getElementById('eraSelect');
+
+            // ---------- CATÀLEG (15 constel·lacions, RA realista) ----------
+            // S'han afegit Lleó (10.5h), Verge (13h) i Cranc (8.5h) per omplir el buit
+            // entre l'Óssa Major (15h) i Orió (5.5h), i s'han ajustat algunes RA.
+            function star(x, y, driftX, driftY, name) { return { x, y, driftX, driftY, name: name || '' }; }
+
+            const CONSTELLATIONS = [
+                {
+                    id: 'ori', name: 'Orió', raHours: 5.5, widthHours: 2.2,
+                    stars: [
+                        star(0.45, 0.35, -0.10, 0.25, 'Betelgeuse'),
+                        star(0.55, 0.40, -0.09, 0.23, 'Bellatrix'),
+                        star(0.50, 0.55, -0.08, 0.21, 'Alnitak'),
+                        star(0.52, 0.58, -0.07, 0.20, 'Alnilam'),
+                        star(0.54, 0.61, -0.06, 0.19, 'Mintaka'),
+                        star(0.40, 0.75, -0.05, 0.18, 'Saiph'),
+                        star(0.60, 0.70, -0.04, 0.17, 'Rigel')
+                    ],
+                    lines: [[0,1],[1,4],[4,6],[6,5],[5,2],[2,0],[2,3],[3,4]]
+                },
+                {
+                    id: 'tau', name: 'Taure', raHours: 4.7, widthHours: 1.8,
+                    stars: [
+                        star(0.40, 0.50, -0.15, 0.22, 'Aldebaran'),
+                        star(0.50, 0.45, -0.16, 0.20, 'θ Tau'),
+                        star(0.55, 0.55, -0.17, 0.19, 'γ Tau'),
+                        star(0.60, 0.60, -0.18, 0.18, 'δ Tau'),
+                        star(0.45, 0.65, -0.14, 0.17, 'ε Tau')
+                    ],
+                    lines: [[0,1],[1,2],[2,3],[1,4]]
+                },
+                {
+                    id: 'aur', name: 'Auriga', raHours: 6.0, widthHours: 1.8,
+                    stars: [
+                        star(0.40, 0.30, -0.05, 0.20, 'Capella'),
+                        star(0.50, 0.45, -0.06, 0.19, 'β Aur'),
+                        star(0.55, 0.55, -0.07, 0.18, 'θ Aur'),
+                        star(0.45, 0.60, -0.08, 0.17, 'ι Aur'),
+                        star(0.35, 0.50, -0.09, 0.16, 'ε Aur')
+                    ],
+                    lines: [[0,1],[1,2],[2,3],[3,4],[4,0]]
+                },
+                {
+                    id: 'cnc', name: 'Cranc', raHours: 8.5, widthHours: 1.5,
+                    stars: [
+                        star(0.40, 0.40, 0.02, 0.10, 'β Cnc'),
+                        star(0.50, 0.45, 0.03, 0.09, 'δ Cnc'),
+                        star(0.55, 0.55, 0.04, 0.08, 'γ Cnc'),
+                        star(0.45, 0.60, 0.05, 0.07, 'α Cnc')
+                    ],
+                    lines: [[0,1],[1,2],[2,3],[0,3]]
+                },
+                {
+                    id: 'leo', name: 'Lleó', raHours: 10.5, widthHours: 2.5,
+                    stars: [
+                        star(0.30, 0.45, 0.05, 0.15, 'Regulus'),
+                        star(0.40, 0.40, 0.06, 0.14, 'η Leo'),
+                        star(0.50, 0.42, 0.07, 0.13, 'Algieba'),
+                        star(0.60, 0.45, 0.08, 0.12, 'ζ Leo'),
+                        star(0.65, 0.55, 0.09, 0.11, 'δ Leo'),
+                        star(0.45, 0.55, 0.10, 0.10, 'θ Leo'),
+                        star(0.30, 0.60, 0.11, 0.09, 'Denebola')
+                    ],
+                    lines: [[0,1],[1,2],[2,3],[3,4],[2,5],[5,6],[4,6]]
+                },
+                {
+                    id: 'vir', name: 'Verge', raHours: 13.0, widthHours: 2.8,
+                    stars: [
+                        star(0.20, 0.50, -0.05, 0.18, 'Spica'),
+                        star(0.35, 0.45, -0.06, 0.17, 'ζ Vir'),
+                        star(0.50, 0.40, -0.07, 0.16, 'Porrima'),
+                        star(0.65, 0.50, -0.08, 0.15, 'ε Vir'),
+                        star(0.55, 0.60, -0.09, 0.14, 'δ Vir'),
+                        star(0.40, 0.65, -0.10, 0.13, 'γ Vir')
+                    ],
+                    lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,0]]
+                },
+                {
+                    id: 'boo', name: 'Bover', raHours: 14.5, widthHours: 2.0,
+                    stars: [
+                        star(0.45, 0.35, -0.05, 0.18, 'Arcturus'),
+                        star(0.55, 0.45, -0.04, 0.17, 'Izar'),
+                        star(0.50, 0.60, -0.03, 0.16, 'Seginus'),
+                        star(0.35, 0.55, -0.02, 0.15, 'Nekkar')
+                    ],
+                    lines: [[0,1],[1,2],[2,3],[3,0]]
+                },
+                {
+                    id: 'umi', name: 'Óssa Menor', raHours: 15.0, widthHours: 1.8,
+                    stars: [
+                        star(0.15, 0.20, -0.05, 0.12, 'Polaris'),
+                        star(0.30, 0.30, -0.06, 0.10, 'Yildun'),
+                        star(0.45, 0.35, -0.08, 0.09, 'ε UMi'),
+                        star(0.55, 0.45, -0.09, 0.08, 'ζ UMi'),
+                        star(0.60, 0.55, -0.10, 0.07, 'Kochab'),
+                        star(0.50, 0.65, -0.11, 0.06, 'Pherkad'),
+                        star(0.35, 0.60, -0.12, 0.05, 'η UMi')
+                    ],
+                    lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,1]]
+                },
+                {
+                    id: 'crb', name: 'Corona Boreal', raHours: 15.8, widthHours: 1.3,
+                    stars: [
+                        star(0.30, 0.40, -0.08, 0.10, 'Alphecca'),
+                        star(0.45, 0.45, -0.09, 0.09, 'β CrB'),
+                        star(0.60, 0.40, -0.10, 0.08, 'γ CrB'),
+                        star(0.70, 0.50, -0.11, 0.07, 'θ CrB')
+                    ],
+                    lines: [[0,1],[1,2],[2,3]]
+                },
+                {
+                    id: 'dra', name: 'Dragó', raHours: 17.0, widthHours: 3.2,
+                    stars: [
+                        star(0.15, 0.50, 0.05, 0.15, 'Eltanin'),
+                        star(0.25, 0.55, 0.06, 0.13, 'Rastaban'),
+                        star(0.35, 0.45, 0.07, 0.11, 'ξ Dra'),
+                        star(0.45, 0.55, 0.08, 0.09, 'η Dra'),
+                        star(0.55, 0.60, 0.09, 0.07, 'ζ Dra'),
+                        star(0.65, 0.55, 0.10, 0.05, 'ι Dra'),
+                        star(0.75, 0.45, 0.11, 0.03, 'Thuban')
+                    ],
+                    lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]]
+                },
+                {
+                    id: 'her', name: 'Hèrcules', raHours: 17.5, widthHours: 2.8,
+                    stars: [
+                        star(0.50, 0.30, 0.05, 0.12, 'Kornephoros'),
+                        star(0.45, 0.45, 0.06, 0.11, 'Zeta Her'),
+                        star(0.55, 0.45, 0.07, 0.10, 'Pi Her'),
+                        star(0.40, 0.60, 0.08, 0.09, 'Eta Her'),
+                        star(0.60, 0.60, 0.09, 0.08, 'Rasalgethi'),
+                        star(0.50, 0.75, 0.10, 0.07, 'Delta Her')
+                    ],
+                    lines: [[0,1],[1,2],[1,3],[2,4],[4,5],[3,5]]
+                },
+                {
+                    id: 'lyr', name: 'Lira', raHours: 18.7, widthHours: 1.3,
+                    stars: [
+                        star(0.45, 0.35, 0.10, 0.15, 'Vega'),
+                        star(0.55, 0.45, 0.11, 0.14, 'ζ Lyr'),
+                        star(0.50, 0.55, 0.12, 0.13, 'β Lyr'),
+                        star(0.40, 0.50, 0.13, 0.12, 'γ Lyr'),
+                        star(0.35, 0.40, 0.14, 0.11, 'δ Lyr')
+                    ],
+                    lines: [[0,1],[1,2],[2,3],[3,4],[4,0]]
+                },
+                {
+                    id: 'aql', name: 'Àguila', raHours: 19.7, widthHours: 1.6,
+                    stars: [
+                        star(0.40, 0.30, 0.12, 0.20, 'Altair'),
+                        star(0.50, 0.40, 0.13, 0.19, 'Tarazed'),
+                        star(0.55, 0.50, 0.14, 0.18, 'Alshain'),
+                        star(0.35, 0.55, 0.15, 0.17, 'ζ Aql'),
+                        star(0.45, 0.65, 0.16, 0.16, 'θ Aql')
+                    ],
+                    lines: [[0,1],[0,2],[2,3],[3,4]]
+                },
+                {
+                    id: 'cyg', name: 'Cigne', raHours: 20.5, widthHours: 2.2,
+                    stars: [
+                        star(0.50, 0.20, 0.15, 0.18, 'Deneb'),
+                        star(0.45, 0.40, 0.14, 0.17, 'Sadr'),
+                        star(0.55, 0.40, 0.13, 0.16, 'η Cyg'),
+                        star(0.40, 0.55, 0.12, 0.15, 'δ Cyg'),
+                        star(0.60, 0.55, 0.11, 0.14, 'Albireo'),
+                        star(0.45, 0.75, 0.10, 0.13, 'ζ Cyg')
+                    ],
+                    lines: [[0,1],[1,2],[1,3],[1,4],[0,4],[3,5]]
+                },
+                {
+                    id: 'cep', name: 'Cefeu', raHours: 22.0, widthHours: 2.2,
+                    stars: [
+                        star(0.30, 0.40, -0.10, 0.10, 'Alderamin'),
+                        star(0.40, 0.50, -0.09, 0.09, 'Alfirk'),
+                        star(0.50, 0.45, -0.08, 0.08, 'Errai'),
+                        star(0.60, 0.55, -0.07, 0.07, 'ζ Cep'),
+                        star(0.65, 0.40, -0.06, 0.06, 'ι Cep')
+                    ],
+                    lines: [[0,1],[1,2],[2,3],[3,4],[4,2]]
+                },
+                {
+                    id: 'cass', name: 'Cassiopea', raHours: 1.0, widthHours: 1.8,
+                    stars: [
+                        star(0.20, 0.30, 0.25, 0.02, 'Caph'),
+                        star(0.30, 0.45, 0.22, 0.03, 'Schedar'),
+                        star(0.40, 0.32, 0.20, 0.04, 'Gamma Cas'),
+                        star(0.55, 0.48, 0.18, 0.05, 'Ruchbah'),
+                        star(0.70, 0.35, 0.16, 0.06, 'Segin')
+                    ],
+                    lines: [[0,1],[1,2],[2,3],[3,4]]
+                }
+            ];
+
+            // ---------- ESTAT ----------
+            let currentEra = 'present';
+            let animStars = CONSTELLATIONS.map(c => ({
+                id: c.id, name: c.name, raHours: c.raHours, widthHours: c.widthHours,
+                stars: c.stars.map(s => ({ ...s })),
+                lines: c.lines.map(l => [...l])
+            }));
+
+            let animationId = null;
+            const DRAW_OLD_DURATION = 500;
+            const MOVE_DURATION = 1300;
+            const DRAW_NEW_DURATION = 500;
+            const TOTAL_DURATION = DRAW_OLD_DURATION + MOVE_DURATION + DRAW_NEW_DURATION;
+
+            // ---------- FACTOR TEMPORAL ----------
+            function getEraFactor(era) {
+                const factors = {
+                    hadean: -5.0, archean: -4.5, proterozoic: -3.8,
+                    cambrian: -2.8, ordovician: -2.5, silurian: -2.3,
+                    devonian: -2.1, carboniferous: -1.9, permian: -1.7,
+                    triassic: -1.5, jurassic: -1.3, cretaceous: -1.0,
+                    paleogene: -0.7, neogene: -0.3, quaternary: -0.05,
+                    present: 0,
+                    future200: 0.8, future400: 1.6, future600: 2.4,
+                    future800: 3.2, future1000: 4.0
+                };
+                return factors[era] || 0;
+            }
+
+            function eraLabel(era) {
+                const labels = {
+                    hadean: 'Hadeà (fa ~4500 Ma)', archean: 'Arqueà (fa ~3500 Ma)',
+                    proterozoic: 'Proterozoic (fa ~2000 Ma)', cambrian: 'Cambrià (fa ~541 Ma)',
+                    ordovician: 'Ordovicià (fa ~485 Ma)', silurian: 'Silurià (fa ~443 Ma)',
+                    devonian: 'Devonià (fa ~419 Ma)', carboniferous: 'Carbonífer (fa ~359 Ma)',
+                    permian: 'Permià (fa ~299 Ma)', triassic: 'Triàsic (fa ~252 Ma)',
+                    jurassic: 'Juràssic (fa ~201 Ma)', cretaceous: 'Cretaci (fa ~145 Ma)',
+                    paleogene: 'Paleogen (fa ~66 Ma)', neogene: 'Neogen (fa ~23 Ma)',
+                    quaternary: 'Quaternari (fa ~2.6 Ma)', present: 'Present',
+                    future200: '+200 Ma', future400: '+400 Ma', future600: '+600 Ma',
+                    future800: '+800 Ma', future1000: '+1000 Ma'
+                };
+                return labels[era] || era;
+            }
+
+            // ---------- TRANSFORMACIÓ RA → X DEL PANE ----------
+            function consCenterX(raHours) { return (raHours / RA_SPAN_HOURS) * PANE_W; }
+            function consWindowWidth(cons) { return (cons.widthHours / RA_SPAN_HOURS) * PANE_W; }
+            function starToPaneX(cons, starX) {
+                const cx = consCenterX(cons.raHours);
+                const w = consWindowWidth(cons);
+                return cx - w / 2 + starX * w;
+            }
+            function starToPaneY(starY) { return starY * VIEW_H; }
+
+            // ---------- COLOR SEGONS ÈPOCA ----------
+            function starColorForEra(era) {
+                if (era === 'present') return '#aaccff';
+                if (era.startsWith('future')) return '#66ffcc';
+                return '#ffaa66';
+            }
+
+            // ---------- ETIQUETES AMB ANTISUPERPOSICIÓ ----------
+            // Es calculen les posicions de les etiquetes de manera que no es creuin
+            // amb les estrelles de la seva pròpia constel·lació ni amb les etiquetes veïnes.
+            // Estratègia: per a cada constel·lació, es prova de col·locar l'etiqueta
+            // a dalt (y=22) o a baix (y=VIEW_H-38) segons on hi hagi menys estrelles,
+            // i es desplaça horitzontalment si cal per evitar solapaments amb etiquetes veïnes.
+            function computeLabelPositions() {
+                const labels = [];
+                // 1) Determinar per a cada constel·lació si va a dalt o a baix
+                animStars.forEach((cons, idx) => {
+                    const cx = consCenterX(cons.raHours);
+                    // Comptar estrelles a la meitat superior i inferior
+                    let topCount = 0, bottomCount = 0;
+                    cons.stars.forEach(s => {
+                        if (s.y < 0.35) topCount++;
+                        if (s.y > 0.65) bottomCount++;
+                    });
+                    // Si hi ha més estrelles a dalt, posem l'etiqueta a baix, i viceversa
+                    const place = topCount > bottomCount ? 'bottom' : 'top';
+                    let baseY = place === 'top' ? 22 : VIEW_H - 16;
+                    labels.push({ idx, cx, baseY, place, name: cons.name, raHours: cons.raHours });
+                });
+
+                // 2) Ordenar per cx i resoldre solapaments horitzontals
+                labels.sort((a, b) => a.cx - b.cx);
+                const MIN_GAP = 70; // px mínim entre etiquetes
+                for (let i = 1; i < labels.length; i++) {
+                    const prev = labels[i - 1];
+                    const curr = labels[i];
+                    if (curr.cx - prev.cx < MIN_GAP) {
+                        // Desplaçar la segona cap a la dreta
+                        const shift = (MIN_GAP - (curr.cx - prev.cx)) / 2;
+                        prev.cx -= shift;
+                        curr.cx += shift;
+                        // Si encara se solapen (per acumulació), desplaçar més
+                        let k = i;
+                        while (k > 0 && labels[k].cx - labels[k-1].cx < MIN_GAP) {
+                            const s = (MIN_GAP - (labels[k].cx - labels[k-1].cx)) / 2;
+                            labels[k-1].cx -= s;
+                            labels[k].cx += s;
+                            k--;
+                        }
+                    }
+                }
+
+                // 3) Retornar en ordre original per index
+                const result = new Array(labels.length);
+                labels.forEach(l => { result[l.idx] = l; });
+                return result;
+            }
+
+            // ---------- DIBUIX ----------
+            function clearCanvas() {
+                ctx.clearRect(0, 0, PANE_W, VIEW_H);
+                const grad = ctx.createRadialGradient(PANE_W*0.3, VIEW_H*0.2, 100, PANE_W*0.5, VIEW_H*0.5, PANE_W*0.8);
+                grad.addColorStop(0, '#0e1628');
+                grad.addColorStop(1, '#020408');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, PANE_W, VIEW_H);
+                ctx.fillStyle = '#ffffff15';
+                for (let i = 0; i < 500; i++) {
+                    const fx = (i * 131) % PANE_W;
+                    const fy = (i * 279) % VIEW_H;
+                    ctx.beginPath();
+                    ctx.arc(fx, fy, 0.8, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function drawAllConstellations(progressLines, phase) {
+                clearCanvas();
+                const starColor = starColorForEra(currentEra);
+
+                // 1) Línies antigues o noves
+                if (phase === 'drawingOld' && progressLines !== undefined) {
+                    animStars.forEach(cons => drawLinesForCons(cons, '#ffaa66', 2.2, progressLines));
+                } else if (phase === 'drawingNew' && progressLines !== undefined) {
+                    animStars.forEach(cons => drawLinesForCons(cons, '#66ffcc', 2.2, progressLines));
+                } else if (phase === 'idle') {
+                    animStars.forEach(cons => drawLinesForCons(cons, '#5a7aaa', 2, 1));
+                }
+
+                // 2) Estrelles
+                animStars.forEach(cons => {
+                    cons.stars.forEach(s => {
+                        const px = starToPaneX(cons, s.x);
+                        const py = starToPaneY(s.y);
+                        ctx.beginPath();
+                        ctx.arc(px, py, 3.8, 0, Math.PI * 2);
+                        ctx.fillStyle = starColor;
+                        ctx.shadowColor = starColor;
+                        ctx.shadowBlur = 10;
+                        ctx.fill();
+                    });
+                });
+                ctx.shadowBlur = 0;
+
+                // 3) Etiquetes amb antisuperposició i fons subtil
+                const labelPositions = computeLabelPositions();
+                labelPositions.forEach(l => {
+                    if (!l) return;
+                    const text = l.name;
+                    ctx.font = 'bold 12px system-ui';
+                    ctx.textAlign = 'center';
+                    const metrics = ctx.measureText(text);
+                    const tw = metrics.width;
+                    const th = 14;
+                    // Fons subtil per llegibilitat
+                    ctx.fillStyle = 'rgba(5, 10, 20, 0.55)';
+                    ctx.fillRect(l.cx - tw/2 - 5, l.baseY - 11, tw + 10, th + 4);
+                    // Text
+                    ctx.fillStyle = '#ffffffcc';
+                    ctx.fillText(text, l.cx, l.baseY);
+                    // RA sota el nom
+                    ctx.font = '9px system-ui';
+                    ctx.fillStyle = '#8a9bc0';
+                    ctx.fillText(`${l.raHours.toFixed(1)}h`, l.cx, l.baseY + 12);
+                });
+                ctx.textAlign = 'start';
+            }
+
+            function drawLinesForCons(cons, color, lineWidth, progress) {
+                if (progress <= 0) return;
+                ctx.beginPath();
+                cons.lines.forEach(([i, j]) => {
+                    const si = cons.stars[i], sj = cons.stars[j];
+                    if (si && sj) {
+                        const x1 = starToPaneX(cons, si.x), y1 = starToPaneY(si.y);
+                        const x2 = starToPaneX(cons, sj.x), y2 = starToPaneY(sj.y);
+                        const mx = x1 + (x2 - x1) * progress;
+                        const my = y1 + (y2 - y1) * progress;
+                        ctx.moveTo(x1, y1);
+                        ctx.lineTo(mx, my);
+                    }
+                });
+                ctx.strokeStyle = color;
+                ctx.lineWidth = lineWidth;
+                ctx.stroke();
+            }
+
+            // ---------- RULER DE RA ----------
+            function drawRARuler() {
+                raCtx.clearRect(0, 0, VIEW_W, 26);
+                raCtx.fillStyle = '#0a0f1ecc';
+                raCtx.fillRect(0, 0, VIEW_W, 26);
+                raCtx.strokeStyle = '#2a3450';
+                raCtx.beginPath();
+                raCtx.moveTo(0, 0.5);
+                raCtx.lineTo(VIEW_W, 0.5);
+                raCtx.stroke();
+
+                const translateX = -getPaneTranslateX();
+                const startRA = (translateX / PANE_W) * RA_SPAN_HOURS;
+                const endRA = startRA + (VIEW_W / PANE_W) * RA_SPAN_HOURS;
+
+                raCtx.font = '10px system-ui';
+                raCtx.textAlign = 'center';
+                for (let h = Math.floor(startRA) - 1; h <= Math.ceil(endRA) + 1; h++) {
+                    const hh = ((h % 24) + 24) % 24;
+                    const x = (h / RA_SPAN_HOURS) * PANE_W + translateX;
+                    if (x < -20 || x > VIEW_W + 20) continue;
+                    raCtx.strokeStyle = '#4a5a80';
+                    raCtx.beginPath();
+                    raCtx.moveTo(x, 6);
+                    raCtx.lineTo(x, 14);
+                    raCtx.stroke();
+                    raCtx.fillStyle = '#a0b8e0';
+                    raCtx.fillText(`${hh}h`, x, 24);
+                }
+            }
+
+            // ---------- POSICIÓ DEL PANE ----------
+            let paneTranslateX = 0;
+            let targetTranslateX = 0;
+            let rafId = null;
+
+            function getPaneTranslateX() { return paneTranslateX; }
+            function clampTranslate(x) {
+                const minX = -(PANE_W - VIEW_W);
+                return Math.max(minX, Math.min(0, x));
+            }
+            function setPaneTranslate(x, immediate) {
+                targetTranslateX = clampTranslate(x);
+                if (immediate) {
+                    paneTranslateX = targetTranslateX;
+                    applyPaneTransform();
+                } else {
+                    startPaneAnimation();
+                }
+            }
+            function applyPaneTransform() {
+                skyPane.style.transform = `translateX(${paneTranslateX}px)`;
+                drawRARuler();
+            }
+            function startPaneAnimation() {
+                if (rafId) cancelAnimationFrame(rafId);
+                function step() {
+                    const diff = targetTranslateX - paneTranslateX;
+                    if (Math.abs(diff) < 0.5) {
+                        paneTranslateX = targetTranslateX;
+                        applyPaneTransform();
+                        rafId = null;
+                        return;
+                    }
+                    paneTranslateX += diff * 0.18;
+                    applyPaneTransform();
+                    rafId = requestAnimationFrame(step);
+                }
+                rafId = requestAnimationFrame(step);
+            }
+
+            // ---------- HOTZONES ----------
+            let hotzoneInterval = null;
+            function startHotzoneScroll(dir) {
+                stopHotzoneScroll();
+                hotzoneInterval = setInterval(() => {
+                    targetTranslateX = clampTranslate(targetTranslateX + dir * 12);
+                    startPaneAnimation();
+                }, 16);
+            }
+            function stopHotzoneScroll() {
+                if (hotzoneInterval) { clearInterval(hotzoneInterval); hotzoneInterval = null; }
+            }
+            hotLeft.addEventListener('mouseenter', () => startHotzoneScroll(+1));
+            hotLeft.addEventListener('mouseleave', stopHotzoneScroll);
+            hotRight.addEventListener('mouseenter', () => startHotzoneScroll(-1));
+            hotRight.addEventListener('mouseleave', stopHotzoneScroll);
+
+            // ---------- ANIMACIÓ DE LA FORMA ----------
+            function startEraAnimation(era) {
+                if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
+
+                const factor = getEraFactor(era);
+                const startSnapshot = animStars.map(c => ({
+                    id: c.id, name: c.name, raHours: c.raHours, widthHours: c.widthHours,
+                    stars: c.stars.map(s => ({ ...s })),
+                    lines: c.lines.map(l => [...l])
+                }));
+                const targetSnapshot = CONSTELLATIONS.map(cons => ({
+                    id: cons.id, name: cons.name, raHours: cons.raHours, widthHours: cons.widthHours,
+                    stars: cons.stars.map(s => ({
+                        x: Math.min(0.95, Math.max(0.05, s.x + s.driftX * factor)),
+                        y: Math.min(0.95, Math.max(0.05, s.y + s.driftY * factor)),
+                        name: s.name
+                    })),
+                    lines: cons.lines.map(l => [...l])
+                }));
+
+                currentEra = era;
+                const startTime = performance.now();
+
+                function step(now) {
+                    const elapsed = now - startTime;
+                    const t = Math.min(elapsed / TOTAL_DURATION, 1);
+                    const oldEnd = DRAW_OLD_DURATION / TOTAL_DURATION;
+                    const moveEnd = (DRAW_OLD_DURATION + MOVE_DURATION) / TOTAL_DURATION;
+
+                    if (t < oldEnd) {
+                        const p = t / oldEnd;
+                        animStars = startSnapshot.map(c => ({ ...c, stars: c.stars.map(s => ({...s})), lines: c.lines.map(l => [...l]) }));
+                        drawAllConstellations(p, 'drawingOld');
+                        statusMsg.textContent = `1) Traçant les formes antigues · ${eraLabel(era)}`;
+                    } else if (t < moveEnd) {
+                        const p = (t - oldEnd) / (moveEnd - oldEnd);
+                        animStars = startSnapshot.map((c, ci) => ({
+                            id: c.id, name: c.name, raHours: c.raHours, widthHours: c.widthHours,
+                            stars: c.stars.map((s, si) => ({
+                                x: s.x + (targetSnapshot[ci].stars[si].x - s.x) * p,
+                                y: s.y + (targetSnapshot[ci].stars[si].y - s.y) * p,
+                                name: s.name
+                            })),
+                            lines: c.lines.map(l => [...l])
+                        }));
+                        drawAllConstellations(undefined, 'moving');
+                        statusMsg.textContent = `2) Movent les estrelles · ${eraLabel(era)}`;
+                    } else {
+                        const p = (t - moveEnd) / (1 - moveEnd);
+                        animStars = targetSnapshot.map(c => ({ ...c, stars: c.stars.map(s => ({...s})), lines: c.lines.map(l => [...l]) }));
+                        drawAllConstellations(p, 'drawingNew');
+                        statusMsg.textContent = `3) Dibuixant les noves formes · ${eraLabel(era)}`;
+                    }
+
+                    if (t < 1) {
+                        animationId = requestAnimationFrame(step);
+                    } else {
+                        animationId = null;
+                        animStars = targetSnapshot.map(c => ({ ...c, stars: c.stars.map(s => ({...s})), lines: c.lines.map(l => [...l]) }));
+                        drawAllConstellations(1, 'idle');
+                        statusMsg.textContent = `Formes completades · ${eraLabel(era)}`;
+                    }
+                }
+                animationId = requestAnimationFrame(step);
+            }
+
+            // ---------- INICIALITZACIÓ ----------
+            function init() {
+                const initialRA = 12;
+                const initialX = -((initialRA / RA_SPAN_HOURS) * PANE_W - VIEW_W / 2);
+                paneTranslateX = clampTranslate(initialX);
+                targetTranslateX = paneTranslateX;
+                applyPaneTransform();
+                drawAllConstellations(1, 'idle');
+                statusMsg.textContent = 'Selecciona una època per veure l\'animació';
+            }
+
+            // ---------- ESDEVENIMENTS ----------
+            // Canvi d'època: l'animació s'inicia automàticament
+            eraSelect.addEventListener('change', () => {
+                startEraAnimation(eraSelect.value);
+            });
+
+            document.getElementById('resetBtn').addEventListener('click', () => {
+                if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
+                currentEra = 'present';
+                eraSelect.value = 'present';
+                animStars = CONSTELLATIONS.map(c => ({
+                    id: c.id, name: c.name, raHours: c.raHours, widthHours: c.widthHours,
+                    stars: c.stars.map(s => ({ ...s })),
+                    lines: c.lines.map(l => [...l])
+                }));
+                drawAllConstellations(1, 'idle');
+                const initialX = -((12 / RA_SPAN_HOURS) * PANE_W - VIEW_W / 2);
+                setPaneTranslate(initialX, false);
+                statusMsg.textContent = 'Vista reiniciada · Present';
+            });
+
+            window.addEventListener('resize', () => { drawRARuler(); });
+
+            init();
+        })();
+    </script>
+</body>
+</html>
